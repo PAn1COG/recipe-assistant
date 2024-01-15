@@ -1,0 +1,120 @@
+/* Chat Container Styles */
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    height: 800px;
+}
+
+@media screen and (max-width: 600px) {
+    .chat-container {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
+/* Header Styles */
+h2 {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin: 0;
+}
+
+/* Message Container Styles */
+.message-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 15px;
+    background-size: cover;
+    scrollbar-width: thin;
+    scrollbar-color: #4CAF50 white;
+}
+
+.message-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.message-container::-webkit-scrollbar-thumb {
+    background-color: #4CAF50;
+    border-radius: 20px;
+}
+
+/* Individual Message Styles */
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    transition: transform 0.3s ease-in-out;
+}
+
+.message.user {
+    background-color: rgba(72, 130, 20, 0.8);
+    text-align: right;
+}
+
+.message.assistant {
+    background-color: rgba(53, 92, 125, 0.8);
+    text-align: left;
+}
+
+.message:hover {
+    transform: translateY(-2px);
+}
+
+/* Input Area Styles */
+.input-area {
+    display: flex;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+}
+
+.input-area input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.input-area button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.input-area button:hover, .input-area button:focus {
+    background-color: #367c39;
+    outline: none;
+}
+
+.input-area button:disabled {
+    background-color: #cccccc;
+    cursor: default;
+}
+
+/* Link Styles */
+a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    text-decoration: underline;
+    outline: none;
+}
