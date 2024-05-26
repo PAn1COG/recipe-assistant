@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import SpeechRecognition,{ useSpeechRecognition } from 'react-speech-recognition';
+import { v4 as uuidv4 } from 'uuid';
 import '../css/chatWithSpeech.css'
 
 
@@ -11,6 +12,7 @@ const ChatWithSpeech = () => {
     const [message, setMessage] = useState('');
     const [conversation, setConversation] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    // const [pauseTimeout, setPauseTimeout] = useState(true);
     const {
         transcript,
         listening,
@@ -25,36 +27,55 @@ const ChatWithSpeech = () => {
     const context = "You are a chef"
     const sendMessage = async () => {
         try {
+            console.log("in SendMessage");
             setIsLoading(true);
             const response = await axios.post('http://localhost:4000/chatGPT', {
                 context,
                 message,
                 conversation
             });
-            // console.log(response.data.response);
-            const newMessages = response.data.response;
+            const newMessages = response.data.response.map((msg, index) => ({
+                id: uuidv4(),
+                content: msg.content,
+                role: msg.role
+            }));
+            console.log(response.data.response);
             // Update the conversation state by concatenating new messages
             setConversation(newMessages);
             setMessage('');
-
-            console.log(conversation);
+            resetTranscript();
+            SpeechRecognition.startListening({ continuous: true });
+            // console.log(conversation);
         } catch (error) {
             console.error('Error sending message:', error);
         } finally {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (!listening) {
+            SpeechRecognition.startListening({ continuous: true });
+            console.log(conversation);
+        }
+    }, [listening]);
+
     useEffect(() => {
         if (transcript.includes("search on GPT")) {
-            setMessage(transcript);
+            const newMessage = transcript.replace("search on GPT", "").trim();
+            setMessage(newMessage);
+            console.log(newMessage);
+            console.log("stopping listen");
+            SpeechRecognition.stopListening();
         }
     }, [transcript]);
 
     useEffect(() => {
-        if (!listening) {
+        if (!listening && message!=="") {
             sendMessage();
         }
-    }, [listening]);
+    }, [listening, message]);
+
 
     return (
         <div className="chat-container">
@@ -68,8 +89,8 @@ const ChatWithSpeech = () => {
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : (
-                    conversation.map((msg, index) => (
-                        <div key={index} className={`message ${msg.role}`}>
+                    conversation.map((msg) => (
+                        <div key={msg.id} className={`message ${msg.role}`}>
                             <p>{msg.content}</p>
                         </div>
                     ))
@@ -80,10 +101,9 @@ const ChatWithSpeech = () => {
                     type="text"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                     placeholder="Type a message..."
                 />
-                <button onClick={sendMessage} disabled={isLoading}>
+                <button disabled={isLoading}>
                     {isLoading ? 'Sending...' : 'Send'}
                 </button>
             </div>
