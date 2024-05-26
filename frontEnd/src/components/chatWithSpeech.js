@@ -56,7 +56,6 @@ const ChatWithSpeech = () => {
     useEffect(() => {
         if (!listening) {
             SpeechRecognition.startListening({ continuous: true });
-            console.log(conversation);
         }
     }, [listening]);
 
@@ -67,12 +66,24 @@ const ChatWithSpeech = () => {
             console.log(newMessage);
             console.log("stopping listen");
             SpeechRecognition.stopListening();
+        } else {
+            // If trigger phrase not detected, stop listening after 10 seconds
+            const timer = setTimeout(() => {
+                setMessage(transcript);
+                if(message!==''){
+                    console.log("stopping listen");
+                    SpeechRecognition.stopListening();
+                }
+            }, 2000); 
+            
+            return () => clearTimeout(timer);
         }
-    }, [transcript]);
+    }, [transcript,message]);
 
     useEffect(() => {
         if (!listening && message!=="") {
             sendMessage();
+            SpeechRecognition.startListening({ continuous: true });
         }
     }, [listening, message]);
 
@@ -82,7 +93,6 @@ const ChatWithSpeech = () => {
             <h2>ChatGPT Chat</h2>
             <div>
                 <p>Microphone:{listening? 'on':'off'}</p>
-                <button onClick={SpeechRecognition.startListening}>Start</button>
                 <p>{transcript}</p>
             </div>
             <div className="message-container">
@@ -97,14 +107,8 @@ const ChatWithSpeech = () => {
                 )}
             </div>
             <div className="input-area">
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Type a message..."
-                />
                 <button disabled={isLoading}>
-                    {isLoading ? 'Sending...' : 'Send'}
+                    {isLoading ? 'Sending...' : 'speak to talk'}
                 </button>
             </div>
         </div>
