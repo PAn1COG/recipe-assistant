@@ -1,120 +1,137 @@
-/* Chat Container Styles */
+/* Chat Container */
 .chat-container {
     max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    font-family: 'Arial', sans-serif;
-    height: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    animation: fadeIn 0.5s ease-out;
 }
 
-@media screen and (max-width: 600px) {
-    .chat-container {
-        width: 100%;
-        border-radius: 0;
-    }
+/* Chat Title */
+.chat-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
-/* Header Styles */
-h2 {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    margin: 0;
-}
-
-/* Message Container Styles */
+/* Message Container */
 .message-container {
     max-height: 300px;
     overflow-y: auto;
-    padding: 15px;
-    background-size: cover;
-    scrollbar-width: thin;
-    scrollbar-color: #4CAF50 white;
+    margin-bottom: 20px;
 }
 
-.message-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.message-container::-webkit-scrollbar-thumb {
-    background-color: #4CAF50;
-    border-radius: 20px;
-}
-
-/* Individual Message Styles */
+/* Message Styles */
 .message {
-    padding: 10px;
     margin-bottom: 10px;
-    border-radius: 8px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    transition: transform 0.3s ease-in-out;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    animation: slideIn 0.5s ease-out;
 }
 
+/* User Message Styles */
 .message.user {
-    background-color: rgba(72, 130, 20, 0.8);
+    background-color: #bde5bd;
     text-align: right;
 }
 
+/* Assistant Message Styles */
 .message.assistant {
-    background-color: rgba(53, 92, 125, 0.8);
+    background-color: #cef2f3;
     text-align: left;
 }
 
-.message:hover {
-    transform: translateY(-2px);
-}
-
-/* Input Area Styles */
+/* Input Area */
 .input-area {
     display: flex;
-    padding: 10px;
-    background-color: #f4f4f4;
-    border-top: 1px solid #ddd;
+    align-items: center;
+    gap: 10px;
 }
 
-.input-area input {
+/* Text Input Styles */
+.input-area input[type="text"] {
     flex-grow: 1;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 20px;
+    background-color: #f0f0f0;
 }
 
+/* Send Button Styles */
 .input-area button {
-    background-color: #4CAF50;
+    padding: 12px 20px;
+    background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 15px;
-    margin-left: 10px;
-    border-radius: 4px;
+    border-radius: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.input-area button:hover, .input-area button:focus {
-    background-color: #367c39;
-    outline: none;
+    transition: background-color 0.3s ease;
 }
 
 .input-area button:disabled {
     background-color: #cccccc;
-    cursor: default;
+    cursor: not-allowed;
 }
 
-/* Link Styles */
-a {
+.input-area button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+/* Dirty Hands Link */
+.chat-container a {
     display: block;
     text-align: center;
-    margin-top: 10px;
-    color: #4CAF50;
+    margin-top: 20px;
+    color: #007bff;
     text-decoration: none;
 }
 
-a:hover, a:focus {
+.chat-container a:hover {
     text-decoration: underline;
-    outline: none;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+    .chat-container {
+        max-width: 90%;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .input-area {
+        flex-direction: column;
+    }
+    
+    .input-area input[type="text"] {
+        width: 100%;
+    }
+    
+    .input-area button {
+        width: 100%;
+    }
 }

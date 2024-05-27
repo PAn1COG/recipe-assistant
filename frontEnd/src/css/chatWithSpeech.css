@@ -1,49 +1,65 @@
+/* Chat Container */
 .chat-container {
     max-width: 600px;
-    margin: 0 auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    margin: 20px auto;
     padding: 20px;
+    border-radius: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    animation: fadeIn 0.5s ease-out;
 }
-
-.message-container {
-    max-height: 400px;
-    overflow-y: auto;
+/* Chat Title */
+.chat-container h2 {
+    font-size: 1.5rem;
     margin-bottom: 20px;
+}
+/* Message Container */
+.message-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 20px;
     padding: 10px;
+    border-radius: 15px;
     background-color: #f9f9f9;
-    border-radius: 8px;
 }
 
+/* Message Styles */
 .message {
     margin-bottom: 10px;
     padding: 10px;
-    border-radius: 5px;
-}
-
-.message.user {
+    border-radius: 10px;
     background-color: #d1e7dd;
-    text-align: right;
+    animation: slideIn 0.5s ease-out;
 }
 
+/* Assistant Message Styles */
 .message.assistant {
     background-color: #cef2f3;
-    text-align: left;
 }
 
+/* User Message Styles */
+.message.user {
+    background-color: #bde5bd;
+}
+
+/* Input Area */
 .input-area {
     display: flex;
+    align-items: center;
     gap: 10px;
+    margin-top: 20px;
 }
 
+/* Text Input Styles */
 input[type="text"] {
     flex-grow: 1;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 5px;
+    background-color: #f0f0f0;
 }
 
+/* Button Styles */
 button {
     padding: 10px 15px;
     background-color: #007bff;
@@ -51,12 +67,42 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:disabled {
     background-color: #cccccc;
+    cursor: not-allowed;
 }
 
 button:hover:not(:disabled) {
     background-color: #0056b3;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-50%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+    .chat-container {
+        max-width: 90%;
+    }
 }
