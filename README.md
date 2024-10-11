@@ -63,9 +63,7 @@ Future Enhancements:
 
 License:
 
-This project is licensed under the MIT License. See the LICENSE file for details.
-
 Built by Sushrut Diwan (Project Lead)  
-For more information or contributions, feel free to contact me at sushrut.email@example.com.
+For more information or contributions, feel free to contact me at sushrutdiwan07@gmail.com.
 
 Note: This project is an academic endeavor and uses OpenAI's API for educational purposes.
